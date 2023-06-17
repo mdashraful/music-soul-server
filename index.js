@@ -16,7 +16,6 @@ app.get("/", (req, res) => {
 
 const verifyJwt = (req, res, next) => {
   const authorization = req.headers.authorization;
-  // console.log(req.headers)
   if (!authorization) {
     return res
       .status(401)
@@ -105,7 +104,6 @@ async function run() {
       if (existingUser) {
         return res.send({ message: "User already exist" });
       }
-      // const user = {email: email}
       const result = await usersCollections.insertOne(user);
       res.send(result);
     });
@@ -238,7 +236,6 @@ async function run() {
       });
       const query = { instructorEmail: singleClass.instructorEmail };
       const result = await classesCollections.find(query).toArray();
-      // console.log(result)
       res.send(result);
     });
 
