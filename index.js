@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
-const { MongoClient, ServerApiVersion } = require("mongodb");
+const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const jwt = require("jsonwebtoken");
 const stripe = require("stripe")(process.env.PAYMENT_SECRET_KEY);
 const app = express();
@@ -229,11 +229,10 @@ async function run() {
       const result = await classesCollections.find(query).toArray();
       res.send(result);
     });
-    app.get("/instructor/:class", async (req, res) => {
-      const id = req.params.class;
-      const singleClass = await classesCollections.findOne({
-        _id: new ObjectId(id),
-      });
+    app.get("/instructor/:id", async (req, res) => {
+      const id = req.params.id;
+      const filter = { _id: new ObjectId(id) };
+      const singleClass = await classesCollections.findOne(filter);
       const query = { instructorEmail: singleClass.instructorEmail };
       const result = await classesCollections.find(query).toArray();
       res.send(result);
