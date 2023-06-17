@@ -184,7 +184,6 @@ async function run() {
     app.patch("/allClasses/feedback/:id", async (req, res) => {
       const id = req.params.id;
       const text = req.body;
-      // console.log(text)
       const query = { _id: new ObjectId(id) };
       const options = {
         $set: text,
@@ -262,24 +261,19 @@ async function run() {
       if (decodedEmail) {
         const query = { _id: new ObjectId(id) };
         const result = await selectedCollections.findOne(query);
-        // console.log(result)
         res.send(result);
       }
     });
     app.get("/fromSelect/:id", async (req, res) => {
       const id = req.params.id;
-      // console.log(id)
       const query = { _id: new ObjectId(id) };
       const result = await selectedCollections.findOne(query);
-      // console.log(result)
       res.send(result);
     });
     app.delete("/fromSelect/:id", async (req, res) => {
       const id = req.params.id;
       const filter = { _id: new ObjectId(id) };
-      // console.log(filter)
       const test = await classesCollections.findOne(filter);
-      // console.log(test)
       const updateDoc = {
         $inc: {
           available_seat: -1,
@@ -293,7 +287,6 @@ async function run() {
 
       const query = { classId: id };
       const deleteResult = await selectedCollections.deleteOne(query);
-      // console.log(result)
       res.send({ updateResult, deleteResult });
     });
 
@@ -357,14 +350,6 @@ async function run() {
       verifyInstructor,
       async (req, res) => {
         const email = req.params.email;
-        // const decodedEmail = req.decoded.email;
-        // if(!selectEmail){
-        //     res.send([])
-        // }
-        // if(selectEmail !== decodedEmail){
-        //     return res.status(403).send({error: true, message: 'Forbidden Access'})
-        // }
-        // console.log(email)
         const query = { instructorEmail: email };
         const result = await classesCollections.find(query).toArray();
         res.send(result);
