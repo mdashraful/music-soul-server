@@ -86,15 +86,6 @@ async function run() {
       }
       next();
     };
-    const verifyStudent = async (req, res, next) => {
-      const email = req.decoded.email;
-      const query = { email: email };
-      const user = await usersCollections.findOne(query);
-      if (user?.role !== "student") {
-        res.send({ error: true, message: "Forbidden Access" });
-      }
-      next();
-    };
 
     // user related apis
     app.post("/users", async (req, res) => {
